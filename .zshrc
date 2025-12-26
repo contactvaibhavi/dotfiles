@@ -105,6 +105,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 # eval "$(starship init zsh)"
+alias git='grc git'
+
 PROMPT="%F{cyan}%n %1~ %# %f"
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 export PYENV_ROOT="$HOME/.pyenv"
