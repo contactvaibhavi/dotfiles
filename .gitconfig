@@ -1,0 +1,55 @@
+# This is Git's per-user configuration file.
+[user]
+# Please adapt and uncomment the following lines:
+	name = Vaibhavi Singh
+	email = contactvaibhavisingh@gmail.com
+	[remind]
+		paths = /Users/vaibhavisingh/gitCode/*
+[core]
+	excludesfile = /Users/vaibhavisingh/.gitignore_global
+	pager = delta
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[interactive]
+	diffFilter = delta --color-only
+[diff]
+	algorithm = histogram
+	colorMoved = default
+[merge]
+	conflictstyle = diff3
+[delta]
+	navigate = true
+	light = true
+	side-by-side = true
+	line-numbers = true
+	syntax-theme = Monokai Extended Light
+[color]
+	ui = auto
+	status = auto
+	diff = auto
+	branch = auto
+	interactive = auto
+	transport = auto
+	progress = auto
+[color "status"]
+	added = green bold
+	changed = yellow bold
+	untracked = red bold
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	old = red bold
+	new = green bold
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
