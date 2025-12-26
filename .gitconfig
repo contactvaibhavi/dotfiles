@@ -52,4 +52,6 @@
 [color "branch"]
 	current = yellow reverse
 	local = yellow
-	remote = green
+    remote = green
+[alias]
+    pushc = "!git push 2>&1 | sed 's/Enumerating/\\x1b[36mEnumerating\\x1b[0m/' | sed 's/Counting/\\x1b[33mCounting\\x1b[0m/' | sed 's/Writing/\\x1b[32mWriting\\x1b[0m/'"

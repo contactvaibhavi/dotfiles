@@ -31,7 +31,6 @@ imath
 jasper
 jpeg-turbo
 jpeg-xl
-lazygit
 libavif
 libb2
 libdeflate
