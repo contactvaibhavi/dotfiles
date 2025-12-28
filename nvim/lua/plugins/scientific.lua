@@ -28,12 +28,15 @@ return {
         desc = "Calculator",
       },
 
-      -- Quick plot function (opens in terminal)
+      -- Quick plot function (opens in iTerm2)
       {
         "<leader>qp",
         function()
           local func = vim.fn.input("Function (e.g., x**2, np.sin(x)): ")
           if func ~= "" then
+            -- Get the full path to python3
+            local python_path = vim.fn.system("which python3"):gsub("%s+", "")
+
             local python_code = string.format(
               [[
 import matplotlib
@@ -67,8 +70,26 @@ except Exception as e:
             file:write(python_code)
             file:close()
 
-            -- Open in new Terminal window (macOS)
-            vim.fn.system(string.format('osascript -e \'tell app "Terminal" to do script "python3 %s"\'', tmpfile))
+            -- Open in iTerm2
+            local applescript = string.format(
+              [[
+tell application "iTerm"
+    create window with default profile
+    tell current session of current window
+        write text "%s %s"
+    end tell
+end tell
+]],
+              python_path,
+              tmpfile
+            )
+
+            local script_file = os.tmpname() .. ".scpt"
+            local script = io.open(script_file, "w")
+            script:write(applescript)
+            script:close()
+
+            vim.fn.system("osascript " .. script_file)
             vim.notify("Plotting: " .. func, vim.log.levels.INFO)
           end
         end,
@@ -79,6 +100,8 @@ except Exception as e:
       {
         "<leader>qa",
         function()
+          local python_path = vim.fn.system("which python3"):gsub("%s+", "")
+
           local python_code = [[
 import matplotlib
 matplotlib.use('TkAgg')
@@ -119,7 +142,25 @@ plt.show()
           file:write(python_code)
           file:close()
 
-          vim.fn.system(string.format('osascript -e \'tell app "Terminal" to do script "python3 %s"\'', tmpfile))
+          local applescript = string.format(
+            [[
+tell application "iTerm"
+    create window with default profile
+    tell current session of current window
+        write text "%s %s"
+    end tell
+end tell
+]],
+            python_path,
+            tmpfile
+          )
+
+          local script_file = os.tmpname() .. ".scpt"
+          local script = io.open(script_file, "w")
+          script:write(applescript)
+          script:close()
+
+          vim.fn.system("osascript " .. script_file)
           vim.notify("Plotting activation functions", vim.log.levels.INFO)
         end,
         desc = "Activation Functions",
@@ -139,6 +180,8 @@ plt.show()
 
           local xmax = vim.fn.input("X max [10]: ")
           xmax = xmax ~= "" and xmax or "10"
+
+          local python_path = vim.fn.system("which python3"):gsub("%s+", "")
 
           local python_code = string.format(
             [[
@@ -175,7 +218,25 @@ except Exception as e:
           file:write(python_code)
           file:close()
 
-          vim.fn.system(string.format('osascript -e \'tell app "Terminal" to do script "python3 %s"\'', tmpfile))
+          local applescript = string.format(
+            [[
+tell application "iTerm"
+    create window with default profile
+    tell current session of current window
+        write text "%s %s"
+    end tell
+end tell
+]],
+            python_path,
+            tmpfile
+          )
+
+          local script_file = os.tmpname() .. ".scpt"
+          local script = io.open(script_file, "w")
+          script:write(applescript)
+          script:close()
+
+          vim.fn.system("osascript " .. script_file)
           vim.notify(string.format("Plotting: %s [%s, %s]", func, xmin, xmax), vim.log.levels.INFO)
         end,
         desc = "Plot with Custom Range",
