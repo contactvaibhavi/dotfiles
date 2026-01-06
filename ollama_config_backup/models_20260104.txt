@@ -1,0 +1,2 @@
+NAME          ID              SIZE     MODIFIED          
+gemma2:27b    53261bc9c192    15 GB    About an hour ago    
