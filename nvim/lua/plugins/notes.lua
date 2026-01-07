@@ -31,15 +31,17 @@ return {
       { "<leader>ot", "<cmd>ObsidianToday<cr>", desc = "Today's Note" },
     },
   },
-
-  -- Markdown preview
   {
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview" },
-    build = "cd app && npm install",
+    "toppair/peek.nvim",
+    build = "deno task --quiet build:fast",
     ft = { "markdown" },
+    config = function()
+      require("peek").setup()
+      vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
+      vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
+    end,
     keys = {
-      { "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", desc = "Markdown Preview" },
+      { "<leader>mp", "<cmd>PeekOpen<cr>", desc = "Peek Markdown" },
     },
   },
 }
