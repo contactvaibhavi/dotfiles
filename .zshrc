@@ -130,3 +130,10 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/atomic.omp.json)"
 export PATH="$HOME/gitCode:$PATH"
 export CDPATH=".:$HOME/gitCode:$HOME"
+alias obsidian_vault="open \"/Users/vaibhavisingh/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian\""
+export OBSIDIAN_VAULT="/Users/vaibhavisingh/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian"
+
+export CDPATH=".:$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents:$HOME"
+
+alias obsidian='open -a Obsidian'
+alias obsidian_vault_open='cd "$OBSIDIAN_VAULT"'
