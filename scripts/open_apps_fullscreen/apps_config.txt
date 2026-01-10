@@ -1,0 +1,11 @@
+# Apps to open in fullscreen (one per line)
+# Lines starting with # are ignored
+
+Obsidian
+iTerm2
+Google Chrome
+
+# Add more apps here:
+# Slack
+# Spotify
+# Code
