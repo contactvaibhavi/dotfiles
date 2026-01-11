@@ -137,3 +137,62 @@ export CDPATH=".:$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents:$HO
 
 alias obsidian='open -a Obsidian'
 alias obsidian_vault_open='cd "$OBSIDIAN_VAULT"'
+
+# Add ~/bin to PATH
+export PATH="$HOME/bin:$PATH"
+
+# Textbook shortcuts
+export TEXTBOOKS_DIR="/Users/vaibhavisingh/Documents/Textbooks"
+alias tb='textbook'
+alias tbl='find "$TEXTBOOKS_DIR" -type f -name "*.pdf" -exec basename {} \;'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Brew maintenance
+alias brewup='brew update && brew upgrade && brew cleanup && brew doctor'
+alias ls='eza --icons'
+alias ll='eza -l --icons --git'
+alias la='eza -la --icons --git'
+alias cat='bat'
+alias rg='rg --smart-case'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit -m'
+alias gp='git push'
+alias gl='git log --oneline --graph --decorate'
+alias gd='git diff'
+alias reload='source ~/.zshrc'
+alias note='cd "$OBSIDIAN_VAULT" && touch "$(date +%Y-%m-%d)-note.md" && obsidian'
+alias daily='cd "$OBSIDIAN_VAULT" && obsidian "$(date +%Y-%m-%d).md"'
+alias py='python3'
+alias search='rg --hidden --follow --ignore-file ~/.gitignore'
+alias textbook_open='open "$TEXTBOOKS_DIR/$(find "$TEXTBOOKS_DIR" -name "*.pdf" | fzf)"'
+alias textbook_note='cd "$OBSIDIAN_VAULT" && nano "$(basename $(find "$TEXTBOOKS_DIR" -name "*.pdf" | fzf) .pdf)-notes.md"'
+alias clip='pbpaste >> "$OBSIDIAN_VAULT/inbox.md" && echo "\n---\n" >> "$OBSIDIAN_VAULT/inbox.md"'
+
+# Fixed daily note alias
+alias daily='cd "$OBSIDIAN_VAULT" && touch "$(date +%Y-%m-%d).md" && obsidian "$(date +%Y-%m-%d).md"'
+
+# Fixed daily note alias - opens specific file
+alias daily='cd "$OBSIDIAN_VAULT" && touch "$(date +%Y-%m-%d).md" && open "obsidian://open?vault=Obsidian&file=$(date +%Y-%m-%d).md"'
+
+# Fixed note alias - opens specific file
+alias note='cd "$OBSIDIAN_VAULT" && NOTE_NAME="$(date +%Y-%m-%d)-note.md" && touch "$NOTE_NAME" && open "obsidian://open?vault=Obsidian&file=${NOTE_NAME}"'
+# Obsidian Planner shortcuts
+alias to_do='open "obsidian://open?vault=Obsidian&file=Planner/To%20Do"'
+alias year_important='open "obsidian://open?vault=Obsidian&file=Planner/Year%20Important"'
+alias del_to_do='open "obsidian://open?vault=Obsidian&file=Planner/Del%20ToDo"'
+alias kanban='open "obsidian://open?vault=Obsidian&file=Planner/Kanban%20Board"'
+# Obsidian Intw shortcuts
+alias concepts='open "obsidian://open?vault=Obsidian&file=Intw/Concepts"'
+alias DSA_revision='open "obsidian://open?vault=Obsidian&file=Intw/DSA%20Revision"'
+alias project_ideas='open "obsidian://open?vault=Obsidian&file=Planner/Project%20Ideas"'
+alias leetcode_saved_questions='open "obsidian://open?vault=Obsidian&file=Intw/Leetcode%20Questions"'
+# Obsidian Networking shortcuts
+alias CRM_log='open "obsidian://open?vault=Obsidian&file=Networking/CRM%20Log"'
+alias my_website='open "obsidian://open?vault=Obsidian&file=Networking/My%20Website"'
+alias invites='open "obsidian://open?vault=Obsidian&file=Networking/Invites"'
+alias CFPs='open "obsidian://open?vault=Obsidian&file=Networking/CFPs/CFP%20Tracker%20Log"'
