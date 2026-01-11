@@ -3,7 +3,7 @@ export CDPATH=".:$HOME/gitCode:$HOME"
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export PATH="/Users/vaibhavisingh/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
@@ -130,8 +130,8 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/atomic.omp.json)"
 export PATH="$HOME/gitCode:$PATH"
 export CDPATH=".:$HOME/gitCode:$HOME"
-alias obsidian_vault="open \"/Users/vaibhavisingh/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian\""
-export OBSIDIAN_VAULT="/Users/vaibhavisingh/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian"
+alias obsidian_vault="open \"$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian\""
+export OBSIDIAN_VAULT="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian"
 
 export CDPATH=".:$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents:$HOME"
 
@@ -142,7 +142,7 @@ alias obsidian_vault_open='cd "$OBSIDIAN_VAULT"'
 export PATH="$HOME/bin:$PATH"
 
 # Textbook shortcuts
-export TEXTBOOKS_DIR="/Users/vaibhavisingh/Documents/Textbooks"
+export TEXTBOOKS_DIR="$HOME/Documents/Textbooks"
 alias tb='textbook'
 alias tbl='find "$TEXTBOOKS_DIR" -type f -name "*.pdf" -exec basename {} \;'
 
