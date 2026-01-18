@@ -191,3 +191,4 @@ alias invites='open "obsidian://open?vault=Obsidian&file=Networking/Invites"'
 alias CFPs='open "obsidian://open?vault=Obsidian&file=Networking/CFPs/CFP%20Tracker%20Log"'
 export RESUME_DIR="$HOME/Documents/Resume/Search"
 export CDPATH=".:$HOME/gitCode:$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents:$HOME"
+alias configs='open "obsidian://open?vault=Obsidian&file=Admin/Configs"'
