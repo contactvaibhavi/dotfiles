@@ -1,4 +1,3 @@
-export CDPATH=".:$HOME/gitCode:$HOME"
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -129,11 +128,9 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/atomic.omp.json)"
 export PATH="$HOME/gitCode:$PATH"
-export CDPATH=".:$HOME/gitCode:$HOME"
 alias obsidian_vault="open \"$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian\""
 export OBSIDIAN_VAULT="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian"
 
-export CDPATH=".:$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents:$HOME"
 
 alias obsidian='open -a Obsidian'
 alias obsidian_vault_open='cd "$OBSIDIAN_VAULT"'
@@ -166,15 +163,11 @@ alias gl='git log --oneline --graph --decorate'
 alias gd='git diff'
 alias reload='source ~/.zshrc'
 alias note='cd "$OBSIDIAN_VAULT" && touch "$(date +%Y-%m-%d)-note.md" && obsidian'
-alias daily='cd "$OBSIDIAN_VAULT" && obsidian "$(date +%Y-%m-%d).md"'
 alias py='python3'
 alias search='rg --hidden --follow --ignore-file ~/.gitignore'
 alias textbook_open='open "$TEXTBOOKS_DIR/$(find "$TEXTBOOKS_DIR" -name "*.pdf" | fzf)"'
 alias textbook_note='cd "$OBSIDIAN_VAULT" && nano "$(basename $(find "$TEXTBOOKS_DIR" -name "*.pdf" | fzf) .pdf)-notes.md"'
 alias clip='pbpaste >> "$OBSIDIAN_VAULT/inbox.md" && echo "\n---\n" >> "$OBSIDIAN_VAULT/inbox.md"'
-
-# Fixed daily note alias
-alias daily='cd "$OBSIDIAN_VAULT" && touch "$(date +%Y-%m-%d).md" && obsidian "$(date +%Y-%m-%d).md"'
 
 # Fixed daily note alias - opens specific file
 alias daily='cd "$OBSIDIAN_VAULT" && touch "$(date +%Y-%m-%d).md" && open "obsidian://open?vault=Obsidian&file=$(date +%Y-%m-%d).md"'
@@ -196,5 +189,5 @@ alias CRM_log='open "obsidian://open?vault=Obsidian&file=Networking/CRM%20Log"'
 alias my_website='open "obsidian://open?vault=Obsidian&file=Networking/My%20Website"'
 alias invites='open "obsidian://open?vault=Obsidian&file=Networking/Invites"'
 alias CFPs='open "obsidian://open?vault=Obsidian&file=Networking/CFPs/CFP%20Tracker%20Log"'
-export RESUME_DIR="/Users/vaibhavisingh/Documents/Resume/Search"
-export CDPATH=".:/Users/vaibhavisingh/gitCode:.:/Users/vaibhavisingh/Library/Mobile Documents/iCloud~md~obsidian/Documents:/Users/vaibhavisingh"
+export RESUME_DIR="$HOME/Documents/Resume/Search"
+export CDPATH=".:$HOME/gitCode:$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents:$HOME"
