@@ -1,10 +1,16 @@
 # dotfiles: Reproducible Research Environment
 
-**Infrastructure as Code for Systems & NLP Research**
+**Infrastructure as Code for Reproducible Science**
 
-This repository contains the declarative configuration and automation scripts required to provision a consistent, high-velocity research environment across local machines (macOS) and remote compute clusters (Linux/Slurm).
+This repository automates the provisioning of standardized research environments, ensuring that local development (macOS) and remote training (HPC) share strictly consistent dependencies. It integrates:
 
-The primary objective is to eliminate environment drift and enable privacy-preserving local inference for sensitive datasets.
+1. **Local NLP**: An offline RAG pipeline (Gemma 2) for private, semantic search over research literature.
+
+2. **Writing Automation**: A continuous LaTeX build system for real-time manuscript validation.
+
+3. **Rapid Reference**: Instant fuzzy retrieval for opening canonical textbooks, citations, and knowledge graphs (Obsidian).
+
+Designed to minimize technical friction and guarantee experimental reproducibility.
 
 ## System Architecture
 
