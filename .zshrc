@@ -192,3 +192,200 @@ alias CFPs='open "obsidian://open?vault=Obsidian&file=Networking/CFPs/CFP%20Trac
 export RESUME_DIR="$HOME/Documents/Resume/Search"
 export CDPATH=".:$HOME/gitCode:$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents:$HOME"
 alias configs='open "obsidian://open?vault=Obsidian&file=Admin/Configs"'
+
+# Open 2 cute pages in Obsidian
+alias diary='open "obsidian://open?vault=Obsidian&file=Planner/2%20cute%20pages"'
+
+# ===== TIMER START =====
+# Timer with LARGE GREEN alert that FORCES itself to front
+timer() {
+    if [ -z "$1" ]; then
+        echo "Usage: timer <minutes> [seconds] <task> <alarm_type>"
+        echo "Alarm types: short, musical, loud, desk, digital, funny, old_desk"
+        echo ""
+        echo "Examples:"
+        echo "  timer 25 study loud"
+        echo "  timer 0 3 yo funny"
+        return 1
+    fi
+    
+    minutes=$1
+    shift
+    
+    # Default values
+    seconds=0
+    task="timer"
+    alarm_type="${TIMER_ALARM:-loud}"
+    custom_sound=""
+    
+    # Get all remaining args
+    remaining_args=("$@")
+    
+    # Check if first remaining arg is a number (seconds)
+    if [[ "${remaining_args[1]}" =~ ^[0-9]+$ ]]; then
+        seconds="${remaining_args[1]}"
+        task="${remaining_args[2]}"
+        if [ -n "${remaining_args[3]}" ]; then
+            if [[ "${remaining_args[3]}" == /* ]] || [[ "${remaining_args[3]}" == ~* ]] || [[ "${remaining_args[3]}" =~ \.(mp3|wav|m4a)$ ]]; then
+                custom_sound="${remaining_args[3]}"
+            else
+                alarm_type="${remaining_args[3]}"
+            fi
+        fi
+    else
+        task="${remaining_args[1]}"
+        if [ -n "${remaining_args[2]}" ]; then
+            if [[ "${remaining_args[2]}" == /* ]] || [[ "${remaining_args[2]}" == ~* ]] || [[ "${remaining_args[2]}" =~ \.(mp3|wav|m4a)$ ]]; then
+                custom_sound="${remaining_args[2]}"
+            else
+                alarm_type="${remaining_args[2]}"
+            fi
+        fi
+    fi
+    
+    total_seconds=$((minutes * 60 + seconds))
+    
+    # Display timer info
+    if [ $seconds -eq 0 ]; then
+        echo "⏱️  Timer: $minutes min for '$task'"
+    else
+        echo "⏱️  Timer: ${minutes}m ${seconds}s for '$task'"
+    fi
+    
+    # Select alarm sound file
+    if [ -n "$custom_sound" ]; then
+        alarm_file="${custom_sound/#\~/$HOME}"
+        if [ ! -f "$alarm_file" ]; then
+            alarm_file="$HOME/.timer_sounds/loud_alarm.mp3"
+        fi
+    else
+        case $alarm_type in
+            short) alarm_file="$HOME/.timer_sounds/short_alarm.mp3" ;;
+            musical) alarm_file="$HOME/.timer_sounds/musical_alarm.mp3" ;;
+            loud) alarm_file="$HOME/.timer_sounds/loud_alarm.mp3" ;;
+            desk) alarm_file="$HOME/.timer_sounds/desk_alarm.mp3" ;;
+            digital) alarm_file="$HOME/.timer_sounds/digital_alarm.mp3" ;;
+            funny) alarm_file="$HOME/.timer_sounds/funny_alarm.mp3" ;;
+            old_desk) alarm_file="$HOME/.timer_sounds/old_desk_alarm.mp3" ;;
+            *) alarm_file="$HOME/.timer_sounds/loud_alarm.mp3" ;;
+        esac
+    fi
+    
+    # Create Swift app for alarm - FORCES TO FRONT
+    cat > /tmp/timer_alarm.swift <<SWIFT
+import Cocoa
+
+class AlarmWindow: NSWindow {
+    init(task: String) {
+        let screenSize = NSScreen.main?.frame.size ?? NSSize(width: 1200, height: 800)
+        let width: CGFloat = screenSize.width * 0.75
+        let height: CGFloat = screenSize.height * 0.75
+        let x = (screenSize.width - width) / 2
+        let y = (screenSize.height - height) / 2
+        
+        super.init(
+            contentRect: NSRect(x: x, y: y, width: width, height: height),
+            styleMask: [.titled, .closable],
+            backing: .buffered,
+            defer: false
+        )
+        
+        self.title = "ALARM"
+        self.isReleasedWhenClosed = false
+        
+        // FORCE window to stay on top of EVERYTHING
+        self.level = .screenSaver
+        self.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
+        
+        let greenColor = NSColor(red: 0.18, green: 0.8, blue: 0.44, alpha: 1.0)
+        self.backgroundColor = greenColor
+        
+        let contentView = NSView(frame: self.contentView!.bounds)
+        contentView.wantsLayer = true
+        contentView.layer?.backgroundColor = greenColor.cgColor
+        
+        let message = NSTextField(labelWithString: "Time Up for '\\(task)'")
+        message.font = NSFont.systemFont(ofSize: 72, weight: .bold)
+        message.textColor = .white
+        message.alignment = .center
+        message.frame = NSRect(x: 50, y: height/2, width: width-100, height: 200)
+        contentView.addSubview(message)
+        
+        let button = NSButton(frame: NSRect(x: width/2 - 200, y: 150, width: 400, height: 100))
+        button.title = "STOP ALARM"
+        button.bezelStyle = .rounded
+        button.font = NSFont.systemFont(ofSize: 36, weight: .bold)
+        button.target = self
+        button.action = #selector(stopAlarm)
+        contentView.addSubview(button)
+        
+        self.contentView = contentView
+    }
+    
+    @objc func stopAlarm() {
+        NSApplication.shared.terminate(nil)
+    }
+}
+
+class AppDelegate: NSObject, NSApplicationDelegate {
+    var window: AlarmWindow!
+    
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        let task = CommandLine.arguments.count > 1 ? CommandLine.arguments[1] : "timer"
+        window = AlarmWindow(task: task)
+        window.makeKeyAndOrderFront(nil)
+        
+        // FORCE to front and activate
+        NSApp.activate(ignoringOtherApps: true)
+        window.orderFrontRegardless()
+        window.makeKey()
+    }
+}
+
+let app = NSApplication.shared
+let delegate = AppDelegate()
+app.delegate = delegate
+app.setActivationPolicy(.accessory)
+app.run()
+SWIFT
+    
+    # Start timer
+    (
+        sleep $total_seconds
+        
+        say -v Samantha "Time up for $task" &
+        say_pid=$!
+        
+        (while true; do afplay "$alarm_file"; sleep 0.3; done) &
+        alarm_loop_pid=$!
+        
+        # Compile and run Swift app
+        swiftc /tmp/timer_alarm.swift -o /tmp/timer_alarm 2>/dev/null
+        /tmp/timer_alarm "$task"
+        
+        # Kill alarm when window closes
+        kill $alarm_loop_pid $say_pid 2>/dev/null
+        killall -9 afplay 2>/dev/null
+        killall -9 say 2>/dev/null
+        rm -f /tmp/timer_alarm.swift /tmp/timer_alarm
+    ) &
+    
+    timer_pid=$!
+    echo "Timer running (PID: $timer_pid)"
+    echo "To stop: timer_stop"
+}
+
+timer_stop() {
+    echo "🛑 Stopping..."
+    pkill -f "sleep" 2>/dev/null
+    pkill -f "timer_alarm" 2>/dev/null
+    killall -9 afplay 2>/dev/null
+    killall -9 say 2>/dev/null
+    rm -f /tmp/timer_alarm.swift /tmp/timer_alarm
+    echo "✅ Stopped"
+}
+
+alias timer5='timer 5 break short'
+alias timer25='timer 25 pomodoro loud'
+export TIMER_ALARM=loud
+# ===== TIMER END =====
