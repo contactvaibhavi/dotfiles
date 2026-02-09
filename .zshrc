@@ -175,14 +175,14 @@ alias daily='cd "$OBSIDIAN_VAULT" && touch "$(date +%Y-%m-%d).md" && open "obsid
 # Fixed note alias - opens specific file
 alias note='cd "$OBSIDIAN_VAULT" && NOTE_NAME="$(date +%Y-%m-%d)-note.md" && touch "$NOTE_NAME" && open "obsidian://open?vault=Obsidian&file=${NOTE_NAME}"'
 # Obsidian Planner shortcuts
-alias to_do='open "obsidian://open?vault=Obsidian&file=Planner/To%20Do"'
-alias year_important='open "obsidian://open?vault=Obsidian&file=Planner/Year%20Important"'
-alias del_to_do='open "obsidian://open?vault=Obsidian&file=Planner/Del%20ToDo"'
-alias kanban='open "obsidian://open?vault=Obsidian&file=Planner/Kanban%20Board"'
+alias todo='open "obsidian://open?vault=Obsidian&file=___Planner/To%20Do"'
+alias year_important='open "obsidian://open?vault=Obsidian&file=___Planner/Year%20Important"'
+alias del_to_do='open "obsidian://open?vault=Obsidian&file=___Planner/Del%20ToDo"'
+alias kanban='open "obsidian://open?vault=Obsidian&file=___Planner/Kanban%20Board"'
 # Obsidian Intw shortcuts
 alias concepts='open "obsidian://open?vault=Obsidian&file=Intw/Concepts"'
 alias DSA_revision='open "obsidian://open?vault=Obsidian&file=Intw/DSA%20Revision"'
-alias project_ideas='open "obsidian://open?vault=Obsidian&file=Planner/Project%20Ideas"'
+alias project_ideas='open "obsidian://open?vault=Obsidian&file=___Planner/Project%20Ideas"'
 alias leetcode_saved_questions='open "obsidian://open?vault=Obsidian&file=Intw/Leetcode%20Questions"'
 # Obsidian Networking shortcuts
 alias CRM_log='open "obsidian://open?vault=Obsidian&file=Networking/CRM%20Log"'
@@ -194,7 +194,7 @@ export CDPATH=".:$HOME/gitCode:$HOME/Library/Mobile Documents/iCloud~md~obsidian
 alias configs='open "obsidian://open?vault=Obsidian&file=Admin/Configs"'
 
 # Open 2 cute pages in Obsidian
-alias diary='open "obsidian://open?vault=Obsidian&file=Planner/2%20cute%20pages"'
+alias diary='open "obsidian://open?vault=Obsidian&file=__Journal/2%20cute%20pages"'
 
 # ===== TIMER START =====
 # Timer with LARGE GREEN alert that FORCES itself to front
