@@ -3,9 +3,11 @@
 # LaTeX Compiler Script
 # Usage: ./compile_latex.sh [main.tex] [options]
 # Options:
-#   -o, --open    Open PDF after compilation
-#   -c, --clean   Clean auxiliary files after compilation
-#   -w, --watch   Watch mode - recompile on file changes
+#   -x, --xelatex   Use XeLaTeX compiler (supports emojis/modern fonts)
+#   -p, --pdflatex  Use pdfLaTeX compiler (default)
+#   -o, --open      Open PDF after compilation
+#   -c, --clean     Clean auxiliary files after compilation
+#   -w, --watch     Watch mode - recompile on file changes
 
 # Colors for output
 RED='\033[0;31m'
@@ -18,10 +20,19 @@ MAIN_FILE="main.tex"
 OPEN_PDF=false
 CLEAN_AUX=false
 WATCH_MODE=false
+ENGINE="pdflatex" # Default engine
 
 # Parse arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
+        -x|--xelatex)
+            ENGINE="xelatex"
+            shift
+            ;;
+        -p|--pdflatex)
+            ENGINE="pdflatex"
+            shift
+            ;;
         -o|--open)
             OPEN_PDF=true
             shift
@@ -37,10 +48,12 @@ while [[ $# -gt 0 ]]; do
         -h|--help)
             echo "Usage: $0 [main.tex] [options]"
             echo "Options:"
-            echo "  -o, --open    Open PDF after compilation"
-            echo "  -c, --clean   Clean auxiliary files after compilation"
-            echo "  -w, --watch   Watch mode - recompile on file changes"
-            echo "  -h, --help    Show this help message"
+            echo "  -x, --xelatex   Use XeLaTeX compiler (supports emojis/modern fonts)"
+            echo "  -p, --pdflatex  Use pdfLaTeX compiler (default)"
+            echo "  -o, --open      Open PDF after compilation"
+            echo "  -c, --clean     Clean auxiliary files after compilation"
+            echo "  -w, --watch     Watch mode - recompile on file changes"
+            echo "  -h, --help      Show this help message"
             exit 0
             ;;
         *.tex)
@@ -65,16 +78,16 @@ BASENAME="${MAIN_FILE%.tex}"
 
 # Function to compile LaTeX
 compile_latex() {
-    echo -e "${YELLOW}Compiling $MAIN_FILE...${NC}"
+    echo -e "${YELLOW}Compiling $MAIN_FILE using $ENGINE...${NC}"
     
-    # Run pdflatex twice for references and TOC
+    # Run compiler twice for references and TOC
     # -interaction=nonstopmode continues on errors without prompting
     # -file-line-error shows error locations
-    pdflatex -interaction=nonstopmode -file-line-error -halt-on-error "$MAIN_FILE"
+    $ENGINE -interaction=nonstopmode -file-line-error -halt-on-error "$MAIN_FILE"
     
     if [ $? -eq 0 ]; then
         # Run again for cross-references
-        pdflatex -interaction=nonstopmode -file-line-error -halt-on-error "$MAIN_FILE" > /dev/null
+        $ENGINE -interaction=nonstopmode -file-line-error -halt-on-error "$MAIN_FILE" > /dev/null
         
         if [ $? -eq 0 ]; then
             echo -e "${GREEN}✓ Compilation successful: ${BASENAME}.pdf${NC}"
