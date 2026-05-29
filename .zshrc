@@ -389,3 +389,5 @@ alias timer5='timer 5 break short'
 alias timer25='timer 25 pomodoro loud'
 export TIMER_ALARM=loud
 # ===== TIMER END =====
+export PATH="/usr/local/smlnj/bin:$PATH"
+mktouch() { mkdir -p "$(dirname "$1")" && touch "$1" }
