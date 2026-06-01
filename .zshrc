@@ -391,3 +391,4 @@ export TIMER_ALARM=loud
 # ===== TIMER END =====
 export PATH="/usr/local/smlnj/bin:$PATH"
 mktouch() { mkdir -p "$(dirname "$1")" && touch "$1" }
+alias tree='eza --tree --git-ignore --level=2 --icons'
