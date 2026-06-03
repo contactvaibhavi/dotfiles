@@ -392,3 +392,5 @@ export TIMER_ALARM=loud
 export PATH="/usr/local/smlnj/bin:$PATH"
 mktouch() { mkdir -p "$(dirname "$1")" && touch "$1" }
 alias tree='eza --tree --git-ignore --level=2 --icons'
+alias chrome='open -a "Google Chrome"'
+ftree() { [[ "$1" == *"*"* ]] && pat="$1" || pat="*.$1"; /opt/homebrew/bin/tree -C -P "$pat" --prune ${2:-~}; }
