@@ -145,7 +145,7 @@ class LocalRAG:
         config_file.parent.mkdir(parents=True, exist_ok=True)
         config_file.write_text(str(folder))
 
-        pdf_files = sorted(list(folder.glob("*.pdf")))
+        pdf_files = sorted(list(folder.rglob("*.pdf")))
 
         if not pdf_files:
             print(f"❌ No PDFs found in {folder_path}")
