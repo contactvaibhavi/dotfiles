@@ -197,7 +197,6 @@ return {
   {
     "stsewd/isort.nvim",
     ft = "python",
-    build = ":UpdateRemotePlugins",
     keys = {
       { "<leader>pi", "<cmd>Isort<CR>", desc = "Sort Imports" },
     },
@@ -206,14 +205,12 @@ return {
   -- Python semantic highlighting
   {
     ft = "python",
-    build = ":UpdateRemotePlugins",
   },
 
   -- Jupyter integration (already included, keeping for completeness)
   {
     "benlubas/molten-nvim",
     version = "^1.0.0",
-    build = ":UpdateRemotePlugins",
     init = function()
       vim.g.molten_output_win_max_height = 20
       vim.g.molten_auto_open_output = false
