@@ -4,7 +4,24 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        pyright = {},
+        pyright = {
+          settings = {
+            python = {
+              pythonPath = vim.g.python3_host_prog,
+              analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = "openFilesOnly",
+                useLibraryCodeForTypes = true,
+              },
+            },
+          },
+          before_init = function(_, config)
+            local venv = os.getenv("VIRTUAL_ENV")
+            if venv then
+              config.settings.python.pythonPath = venv .. "/bin/python"
+            end
+          end,
+        },
         ruff_lsp = {},
       },
     },
