@@ -202,10 +202,6 @@ return {
     },
   },
 
-  -- Python semantic highlighting
-  {
-    ft = "python",
-  },
 
   -- Jupyter integration (already included, keeping for completeness)
   {

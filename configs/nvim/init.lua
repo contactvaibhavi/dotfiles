@@ -44,4 +44,3 @@ vim.g.clipboard = {
 }
 vim.opt.clipboard = "unnamed"
 vim.opt.termguicolors = true
-vim.cmd.colorscheme("tokyonight-night")
